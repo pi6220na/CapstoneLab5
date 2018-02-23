@@ -1,6 +1,8 @@
 # Lab5 - Part2 - Test Game
 
+import sys
 import rock
+import unittest
 from unittest import TestCase
 from unittest.mock import patch
 
@@ -132,3 +134,32 @@ class TestRockGame(TestCase):
         self.assertEqual(player1['1-win'], player2['2-loss'])
         self.assertEqual(player1['6-scissors'], 1)
 
+
+# # Run the test case
+# if __name__ == '__main__':
+#     unittest.main()
+
+
+def suite():
+    """
+        Gather all the tests from this module in a test suite.
+    """
+    test_suite = unittest.TestSuite()
+    test_suite.addTest(unittest.makeSuite(TestRockGame))
+    return test_suite
+
+def main():
+    mySuite=suite()
+
+    runner=unittest.TextTestRunner(stream=sys.stderr, descriptions=True, verbosity=2)
+    myResult = runner.run(mySuite)
+
+    print('The Test Suite Results: {}'.format(myResult))
+    print('Errors: {} '.format(myResult.errors))
+    print('Failures: {} '.format(myResult.failures))
+    print('Skipped: {} '.format(myResult.skipped))
+    print('wasSuccessful: {} '.format(myResult.wasSuccessful()))
+    print('Number of tests run: {} '.format(myResult.testsRun))
+
+
+main()
