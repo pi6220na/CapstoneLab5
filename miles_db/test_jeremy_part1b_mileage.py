@@ -4,9 +4,10 @@
 
 import mileage
 import sqlite3
-from unittest import TestCase
+#from unittest import TestCase
+import unittest
 
-class TestMileageDBPart1b(TestCase):
+class TestMileageDBPart1b(unittest.TestCase):
 
     test_db_url = 'test_miles.db'
 
@@ -38,5 +39,10 @@ class TestMileageDBPart1b(TestCase):
         # self.assertIn('White', testMe) this fails
 
         testMe = mileage.search_for_vehicle('White')   # returns None
+        self.assertEqual(None, testMe)
+
+    @unittest.expectedFailure
+    def test_expect_failure(self):
+        testMe = mileage.search_for_vehicle('WHITE')   # returns vehicle { 'WHITE',111 }
         self.assertEqual(None, testMe)
 

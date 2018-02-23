@@ -33,7 +33,7 @@ class TestMileageDB(TestCase):
 
     def test_add_new_vehicle(self):
         mileage.add_miles('Blue Car', 100)
-        expected = { 'BLUE CAR': 100 }
+        expected = { 'BLUE CAR': 100, 'WHITE':111, 'GINGER':222, 'PINK':333 }
         self.compare_db_to_expected(expected)
 
         mileage.add_miles('Green Car', 50)
@@ -43,7 +43,7 @@ class TestMileageDB(TestCase):
 
     def test_increase_miles_for_vehicle(self):
         mileage.add_miles('Red Car', 100)
-        expected = { 'RED CAR': 100 }
+        expected = { 'RED CAR': 100, 'WHITE':111, 'GINGER':222, 'PINK':333  }
         self.compare_db_to_expected(expected)
 
         mileage.add_miles('Red Car', 50)
@@ -70,7 +70,7 @@ class TestMileageDB(TestCase):
 
     def test_add_new_vehicle_mixed_case(self):
         mileage.add_miles('OrAnGe car', 100)
-        expected = {'ORANGE CAR': 100}
+        expected = {'ORANGE CAR': 100, 'WHITE':111, 'GINGER':222, 'PINK':333 }
         self.compare_db_to_expected(expected)
 
         mileage.add_miles('orange car', 50)
@@ -87,9 +87,9 @@ class TestMileageDB(TestCase):
         cursor = conn.cursor()
         all_data = cursor.execute('SELECT * FROM MILES').fetchall()
 
-        print(expected)
-        print()
-        print(all_data)
+        #print(expected)
+        #print()
+        #print(all_data)
 
         # Same rows in DB as entries in expected dictionary
         self.assertEqual(len(expected.keys()), len(all_data))               #### WHy this check ?????????????????
@@ -97,6 +97,11 @@ class TestMileageDB(TestCase):
         for row in all_data:
             # Vehicle exists, and mileage is correct
             self.assertIn(row[0], expected.keys())
+
+            #print('looping through row in all_data')
+            #print(row[0])
+            #print(expected[row[0]])
+            #print(row[1])
             self.assertEqual(expected[row[0]], row[1])
 
         conn.close()
